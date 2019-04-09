@@ -22,10 +22,10 @@ const TopBar = ({ theme }) => {
                 소개
               </Menu>
               <Menu theme={theme} scroll={scroll}>
-                내 일정
+                일정 만들기
               </Menu>
               <Menu theme={theme} scroll={scroll}>
-                일정 만들기
+                내 일정
               </Menu>
             </MenuWrapper>
           </WrapperLeft>
@@ -50,6 +50,7 @@ const Container = styled.div`
   padding-left: 60px;
   background: none;
   transition: all 0.3s ease;
+  z-index: 12;
 
   ${props =>
     props.theme !== "home" &&
