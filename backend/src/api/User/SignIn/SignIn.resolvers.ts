@@ -26,13 +26,15 @@ const resolvers: Resolvers = {
         return {
           ok: true,
           error: null,
-          token
+          token,
+          userName
         };
       } catch (error) {
         return {
           ok: false,
           error: error.message,
-          token: null
+          token: null,
+          userName: null
         };
       }
     }

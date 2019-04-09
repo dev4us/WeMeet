@@ -1,24 +1,33 @@
 import React, { useState, useContext, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { toast } from "react-toastify";
 
 import { Store } from "../../GlobalState/store";
 import { useMutation } from "react-apollo-hooks";
 
-import { GoogleLogin } from "react-google-login";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { SIGN_IN_GOOGLE } from "./queries";
 
 const TopBar = ({ theme }) => {
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const [scroll, setScroll] = useState(0);
   const signInMutation = useMutation(SIGN_IN_GOOGLE);
 
-  useEffect(() => {}, [scroll]);
+  const GOOGLE_API_KEY =
+    "523687604846-qft63kb3lg7vhj51vqoafqu2c8uafidt.apps.googleusercontent.com";
 
-  if (theme === "home") {
-    window.addEventListener("scroll", e => {
-      setScroll(document.documentElement.scrollTop);
-    });
-  }
+  const setScrollEvent = e => {
+    setScroll(document.documentElement.scrollTop);
+  };
+  useEffect(() => {
+    if (theme === "home") {
+      window.addEventListener("scroll", setScrollEvent);
+      return () => {
+        window.removeEventListener("scroll", setScrollEvent);
+      };
+    }
+  }, [scroll]);
+
   return (
     <>
       <Container theme={theme} scroll={scroll}>
@@ -37,54 +46,68 @@ const TopBar = ({ theme }) => {
             </MenuWrapper>
           </WrapperLeft>
           <WrapperRight>
-            <GoogleLogin
-              clientId="523687604846-qft63kb3lg7vhj51vqoafqu2c8uafidt.apps.googleusercontent.com"
-              autoLoad={false}
-              render={renderProps => (
-                <Login
-                  theme={theme}
-                  scroll={scroll}
-                  onClick={renderProps.onClick}
-                >
-                  로그인
-                </Login>
-              )}
-              buttonText="Login"
-              onSuccess={responseGoogle => {
-                const {
-                  profileObj: { name, email, imageUrl }
-                } = responseGoogle;
+            {!state.isLoggedIn && (
+              <GoogleLogin
+                clientId={GOOGLE_API_KEY}
+                autoLoad={false}
+                render={renderProps => (
+                  <Login
+                    theme={theme}
+                    scroll={scroll}
+                    onClick={renderProps.onClick}
+                  >
+                    로그인
+                  </Login>
+                )}
+                buttonText="Login"
+                onSuccess={responseGoogle => {
+                  const {
+                    profileObj: { name, email, imageUrl }
+                  } = responseGoogle;
 
-                signInMutation({
-                  variables: {
-                    userEmail: email,
-                    userName: name,
-                    profileImage: imageUrl
-                  }
-                }).then(
-                  result => {
-                    const {
-                      data: {
-                        SignIn: { ok, error, token }
-                      }
-                    } = result;
-
-                    if (ok === true) {
-                      localStorage.setItem("jwt", token);
-                      dispatch({ type: "LOGIN", payload: token });
-                    } else {
-                      alert(error);
+                  signInMutation({
+                    variables: {
+                      userEmail: email,
+                      userName: name,
+                      profileImage: imageUrl
                     }
-                  },
-                  error => {
-                    alert(`Login failed with Google Account`);
-                  }
-                );
-              }}
-              onFailure={() => {
-                alert(`Login failed with Google Account`);
-              }}
-            />
+                  }).then(
+                    result => {
+                      const {
+                        data: {
+                          SignIn: { ok, error, token }
+                        }
+                      } = result;
+
+                      if (ok === true) {
+                        localStorage.setItem("jwt", token);
+                        dispatch({ type: "LOGIN", payload: token });
+                        toast.info(`반가워요! ${name}님!`);
+                      } else {
+                        alert(error);
+                      }
+                    },
+                    error => {
+                      alert(`Login failed with Google Account`);
+                    }
+                  );
+                }}
+                onFailure={() => {
+                  alert(`Login failed with Google Account`);
+                }}
+              />
+            )}
+            {state.isLoggedIn && (
+              <GoogleLogout
+                clientId={GOOGLE_API_KEY}
+                buttonText="Logout"
+                autoLoad={false}
+                onLogoutSuccess={() => {
+                  localStorage.removeItem("jwt");
+                  dispatch({ type: "LOGOUT" });
+                }}
+              />
+            )}
           </WrapperRight>
         </Wrapper>
       </Container>
@@ -108,6 +131,7 @@ const Container = styled.div`
     props.theme !== "home" &&
     css`
       background: white;
+      border-bottom: 1px solid #dcdcdc;
     `}
 
   ${props =>
