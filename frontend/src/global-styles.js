@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
     html, body, #root{
       width:100%;
-      height:200%;
+      height:100%;
       font-family: "Noto Sans KR", -apple-system, system-ui,BlinkMacSystemFont,"Segoe UI","Roboto","Helvetica Neue",Arial,sans-serif;
     }
     * {
