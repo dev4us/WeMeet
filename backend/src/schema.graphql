@@ -34,3 +34,13 @@ type User {
   createdAt: String!
   updatedAt: String
 }
+
+type SignInResponse {
+  ok: Boolean!
+  error: String
+  token: String
+}
+
+type Mutation {
+  SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!
+}

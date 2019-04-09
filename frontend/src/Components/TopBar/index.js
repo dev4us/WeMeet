@@ -1,8 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled, { css } from "styled-components";
 
+import { Store } from "../../GlobalState/store";
+import { useMutation } from "react-apollo-hooks";
+
+import { GoogleLogin } from "react-google-login";
+import { SIGN_IN_GOOGLE } from "./queries";
+
 const TopBar = ({ theme }) => {
+  const { dispatch } = useContext(Store);
   const [scroll, setScroll] = useState(0);
+  const signInMutation = useMutation(SIGN_IN_GOOGLE);
+
+  useEffect(() => {}, [scroll]);
 
   if (theme === "home") {
     window.addEventListener("scroll", e => {
@@ -27,9 +37,54 @@ const TopBar = ({ theme }) => {
             </MenuWrapper>
           </WrapperLeft>
           <WrapperRight>
-            <Login theme={theme} scroll={scroll}>
-              로그인
-            </Login>
+            <GoogleLogin
+              clientId="523687604846-qft63kb3lg7vhj51vqoafqu2c8uafidt.apps.googleusercontent.com"
+              autoLoad={false}
+              render={renderProps => (
+                <Login
+                  theme={theme}
+                  scroll={scroll}
+                  onClick={renderProps.onClick}
+                >
+                  로그인
+                </Login>
+              )}
+              buttonText="Login"
+              onSuccess={responseGoogle => {
+                const {
+                  profileObj: { name, email, imageUrl }
+                } = responseGoogle;
+
+                signInMutation({
+                  variables: {
+                    userEmail: email,
+                    userName: name,
+                    profileImage: imageUrl
+                  }
+                }).then(
+                  result => {
+                    const {
+                      data: {
+                        SignIn: { ok, error, token }
+                      }
+                    } = result;
+
+                    if (ok === true) {
+                      localStorage.setItem("jwt", token);
+                      dispatch({ type: "LOGIN", payload: token });
+                    } else {
+                      alert(error);
+                    }
+                  },
+                  error => {
+                    alert(`Login failed with Google Account`);
+                  }
+                );
+              }}
+              onFailure={() => {
+                alert(`Login failed with Google Account`);
+              }}
+            />
           </WrapperRight>
         </Wrapper>
       </Container>

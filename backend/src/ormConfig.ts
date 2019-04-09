@@ -2,7 +2,7 @@ import { ConnectionOptions } from "typeorm";
 
 const connectionOptions: ConnectionOptions = {
   type: "postgres",
-  database: "WeMeet",
+  database: "wemeet",
   synchronize: true,
   logging: true,
   entities: ["entities/**/*.*"],

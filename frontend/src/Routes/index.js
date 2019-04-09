@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import { Store } from "../GlobalState/store";
 
 import About from "./About";
 
-const RouteSet = () => (
+const LoggedOutRoutes = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" exact component={About} />
+    </Switch>
+  </BrowserRouter>
+);
+
+const LoggedInRoutes = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={About} />
@@ -12,7 +22,13 @@ const RouteSet = () => (
 );
 
 const Routes = () => {
-  return <RouteSet />;
+  const { state } = useContext(Store);
+
+  if (state.isLoggedIn) {
+    return <LoggedInRoutes />;
+  } else {
+    return <LoggedOutRoutes />;
+  }
 };
 
 export default Routes;
