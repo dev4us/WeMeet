@@ -1,0 +1,12 @@
+type Day {
+  id: Int!
+  pickDate: String!
+  asMeeting: Meeting
+  participants: [User]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Query {
+  Day: String!
+}

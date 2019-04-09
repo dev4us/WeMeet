@@ -1,0 +1,14 @@
+type Meeting {
+  id: Int!
+  title: String!
+  description: String
+  participants: [User]
+  admin: User
+  meetingDays: [Day]
+  createdAt: String!
+  updatedAt: String
+}
+
+type Query {
+  Meeting: String!
+}

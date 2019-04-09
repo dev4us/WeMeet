@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdNavigateNext, MdMailOutline } from "react-icons/md";
+import { GoMarkGithub } from "react-icons/go";
 const Footer = () => {
   return (
     <Container>
@@ -11,7 +12,9 @@ const Footer = () => {
             <EmailIcon />
             public.dev4us@gmail.com
           </Message>
-          <Message>https://github.com/dev4us</Message>
+          <Message>
+            <GithubIcon />https://github.com/dev4us
+          </Message>
         </Frame>
         <Frame>
           <Header>서비스 정책</Header>
@@ -64,6 +67,12 @@ const PickerIcon = styled(MdNavigateNext)`
 `;
 
 const EmailIcon = styled(MdMailOutline)`
+  margin-right: 5px;
+  font-size: 14px;
+  padding-top: 1.5px;
+`;
+
+const GithubIcon = styled(GoMarkGithub)`
   margin-right: 5px;
   font-size: 14px;
   padding-top: 1.5px;

@@ -19,9 +19,6 @@ const TopBar = ({ theme }) => {
             </Logo>
             <MenuWrapper>
               <Menu theme={theme} scroll={scroll}>
-                소개
-              </Menu>
-              <Menu theme={theme} scroll={scroll}>
                 일정 만들기
               </Menu>
               <Menu theme={theme} scroll={scroll}>
