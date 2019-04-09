@@ -5,6 +5,7 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
   @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:300,400,700&subset=korean');
+  @import url('https://fonts.googleapis.com/css?family=Audiowide');
   ${reset}
     html, body, #root{
       width:100%;
@@ -25,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
     button{
       &.focus,
       &.active{outline:none}
+      font-family: "Noto Sans KR", -apple-system, system-ui,BlinkMacSystemFont,"Segoe UI","Roboto","Helvetica Neue",Arial,sans-serif;
     }
 `;
 

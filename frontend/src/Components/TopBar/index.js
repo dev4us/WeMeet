@@ -15,7 +15,7 @@ const TopBar = ({ theme }) => {
         <Wrapper>
           <WrapperLeft>
             <Logo theme={theme} scroll={scroll}>
-              LOGO
+              WeMeet
             </Logo>
             <MenuWrapper>
               <Menu theme={theme} scroll={scroll}>
@@ -91,7 +91,7 @@ const WrapperLeft = styled.div`
 const Logo = styled.div`
   width: 120px;
   height: 35px;
-  border: 1px dashed #dcdcdc;
+  font-family: "Audiowide", sans-serif;
   margin-right: 60px;
   cursor: pointer;
 
