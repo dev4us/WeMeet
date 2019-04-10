@@ -10,6 +10,7 @@ type Day {
 type Query {
   Day: String!
   Meeting: String!
+  GetProfile: GetProfileResponse!
   User: String!
 }
 
@@ -22,6 +23,12 @@ type Meeting {
   meetingDays: [Day]
   createdAt: String!
   updatedAt: String
+}
+
+type GetProfileResponse {
+  ok: Boolean!
+  error: String
+  User: User
 }
 
 type User {

@@ -19,7 +19,7 @@ class Day extends BaseEntity {
   id: number;
 
   @Column({ type: "timestamp" })
-  pickDate: Date;
+  pickDate: string;
 
   @ManyToOne(type => Meeting, meeting => meeting.meetingDays)
   asMeeting: Meeting;
