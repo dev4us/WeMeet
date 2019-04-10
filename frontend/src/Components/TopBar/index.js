@@ -1,17 +1,22 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
+import { MdKeyboardArrowDown } from "react-icons/md";
 import { toast } from "react-toastify";
 
 import { Store } from "../../GlobalState/store";
-import { useMutation } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
 
 import { GoogleLogin, GoogleLogout } from "react-google-login";
-import { SIGN_IN_GOOGLE } from "./queries";
+import { SIGN_IN_GOOGLE, GET_PROFILE } from "./queries";
 
 const TopBar = ({ theme }) => {
   const { state, dispatch } = useContext(Store);
   const [scroll, setScroll] = useState(0);
+  const [isProfilePop, setProfilePop] = useState(false);
+  const popMenuRef = useRef(null);
   const signInMutation = useMutation(SIGN_IN_GOOGLE);
+
+  const { data } = useQuery(GET_PROFILE, { skip: !state.isLoggedIn });
 
   const GOOGLE_API_KEY =
     "523687604846-qft63kb3lg7vhj51vqoafqu2c8uafidt.apps.googleusercontent.com";
@@ -19,13 +24,33 @@ const TopBar = ({ theme }) => {
   const setScrollEvent = e => {
     setScroll(document.documentElement.scrollTop);
   };
+
+  const setClickEvent = e => {
+    if (popMenuRef.current && popMenuRef.current.className) {
+      const compareTarget = e.path.filter(object => {
+        console.log("obj :: ", object.className);
+        console.log("ref :: ", popMenuRef.current.className);
+
+        return object.className === popMenuRef.current.className;
+      });
+
+      if (compareTarget.length > 0) {
+        return;
+      }
+    }
+    setProfilePop(false);
+  };
+
   useEffect(() => {
+    window.addEventListener("mousedown", setClickEvent, false);
+
     if (theme === "home") {
       window.addEventListener("scroll", setScrollEvent);
-      return () => {
-        window.removeEventListener("scroll", setScrollEvent);
-      };
     }
+    return () => {
+      window.removeEventListener("scroll", setScrollEvent);
+      window.removeEventListener("mousedown", setClickEvent, false);
+    };
   }, [scroll]);
 
   return (
@@ -98,15 +123,50 @@ const TopBar = ({ theme }) => {
               />
             )}
             {state.isLoggedIn && (
-              <GoogleLogout
-                clientId={GOOGLE_API_KEY}
-                buttonText="Logout"
-                autoLoad={false}
-                onLogoutSuccess={() => {
-                  localStorage.removeItem("jwt");
-                  dispatch({ type: "LOGOUT" });
-                }}
-              />
+              <>
+                {data && data.GetProfile && data.GetProfile.User && (
+                  <StatusMenu
+                    onClick={() => {
+                      setProfilePop(!isProfilePop);
+                    }}
+                    ref={popMenuRef}
+                  >
+                    <HelloText theme={theme} scroll={scroll}>
+                      반가워요 {data.GetProfile.User.userName}님!
+                    </HelloText>
+                    <StatusMenuMoreIcon theme={theme} scroll={scroll} />
+                    {isProfilePop && (
+                      <PopMenu
+                        onClick={e => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <PopMenuRow theme={theme}>
+                          <StatusMenuText>정보 수정하기</StatusMenuText>
+                        </PopMenuRow>
+                        <GoogleLogout
+                          clientId={GOOGLE_API_KEY}
+                          buttonText="Logout"
+                          autoLoad={false}
+                          onLogoutSuccess={() => {
+                            toast.info(`다음에 우리 또 만나요!`);
+                            localStorage.removeItem("jwt");
+                            dispatch({ type: "LOGOUT" });
+                          }}
+                          render={renderProps => (
+                            <PopMenuRow
+                              onClick={renderProps.onClick}
+                              theme={theme}
+                            >
+                              <StatusMenuText>로그아웃</StatusMenuText>
+                            </PopMenuRow>
+                          )}
+                        />
+                      </PopMenu>
+                    )}
+                  </StatusMenu>
+                )}
+              </>
             )}
           </WrapperRight>
         </Wrapper>
@@ -259,4 +319,87 @@ const Login = styled.div`
     `}
 `;
 
+const StatusMenu = styled.div`
+  display: flex;
+  position: relative;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const HelloText = styled.p`
+  font-size: 12px;
+
+  ${props =>
+    props.theme === "home" &&
+    css`
+      color: white;
+
+      ${props =>
+        props.scroll !== 0 &&
+        css`
+          color: black;
+        `}
+
+      ${Container}:hover & {
+        color: black;
+      }
+    `}
+`;
+
+const StatusMenuMoreIcon = styled(MdKeyboardArrowDown)`
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+
+  ${props =>
+    props.theme === "home" &&
+    css`
+      color: white;
+
+      ${props =>
+        props.scroll !== 0 &&
+        css`
+          color: black;
+        `}
+
+      ${Container}:hover & {
+        color: black;
+      }
+    `}
+`;
+
+const PopMenu = styled.div`
+  position: absolute;
+  width: 200px;
+  top: 30px;
+  left: -40px;
+  border: 1px solid #dcdcdc;
+  background: white;
+`;
+
+const PopMenuRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  border-bottom: 1px solid #dcdcdc;
+
+  ${props =>
+    props.theme === "home" &&
+    css`
+      ${Container}:hover & {
+        padding-top: 1px;
+      }
+    `}
+`;
+
+const StatusMenuText = styled.p`
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  color: #5c5c5c;
+`;
 export default TopBar;
