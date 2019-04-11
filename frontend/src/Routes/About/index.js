@@ -31,7 +31,7 @@ const About = () => {
           </IntroContents>
         </IntroContainer>
         <AboutContainer>
-          <AboutContents>
+          <AboutContents direction="right" order="1">
             <AboutImage>
               <IPhoneImg src={IPhone} alt="Iphone" />
             </AboutImage>
@@ -71,7 +71,7 @@ const About = () => {
           </AboutContents>
         </AboutContainer>
         <AboutContainer>
-          <AboutContents>
+          <AboutContents direction="right">
             <AboutImage>
               <IPhoneImg src={IPhone} alt="Iphone" />
             </AboutImage>
@@ -111,6 +111,10 @@ const IntroBackground = styled.div`
   clip-path: polygon(0px 0px, 100% 0px, 100% 85%, 0px 100%);
   background-image: linear-gradient(rgb(10, 88, 214), rgb(81, 147, 255)),
     url(undefined);
+
+  @media (max-width: 465px) {
+    height: 500px;
+  }
 `;
 
 const IntroContents = styled.div`
@@ -126,11 +130,19 @@ const IntroWrapper = styled.div`
   top: 0px;
   justify-content: space-between;
   width: 50%;
-  height: 800px;
+  /*height: 800px;*/
+
+  @media (max-width: 1024px) {
+    justify-content: center;
+  }
 `;
 
 const IntroLeft = styled.div`
   padding-top: 250px;
+
+  @media (max-width: 1024px) {
+    padding-top: 200px;
+  }
 `;
 
 const IntroMainMessage = styled.p`
@@ -138,6 +150,22 @@ const IntroMainMessage = styled.p`
   color: white;
   line-height: 1.5;
   white-space: nowrap;
+
+  @media (max-width: 1220px) {
+    font-size: 1.8rem;
+  }
+  @media (max-width: 1024px) {
+    font-size: 3.5rem;
+  }
+  @media (max-width: 650px) {
+    font-size: 2.5rem;
+  }
+  @media (max-width: 465px) {
+    font-size: 2rem;
+  }
+  @media (max-width: 365px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const TryBtn = styled.button`
@@ -160,14 +188,26 @@ const TryBtn = styled.button`
     box-shadow: none;
     -webkit-box-shadow: none;
   }
+
+  @media (max-width: 365px) {
+    margin-top: 35px;
+  }
 `;
 
 const IntroRight = styled.div`
   padding-top: 180px;
+
+  @media (max-width: 1024px) {
+    display: none;
+  }
 `;
 
 const IPhoneImg = styled.img`
   width: 500px;
+
+  @media (max-width: 465px) {
+    width: 300px;
+  }
 `;
 
 const AboutContainer = styled.div`
@@ -180,30 +220,51 @@ const AboutContents = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 1000px;
-  height: 500px;
 
   margin-top: 100px;
+
+  flex-wrap: wrap-reverse;
+
+  ${props =>
+    props.direction === "right" &&
+    css`
+      flex-wrap: wrap;
+    `}
+
+  ${props =>
+    props.order === "1" &&
+    css`
+      @media (max-width: 465px) {
+        margin-top: 0px;
+      }
+    `}
 `;
 
 const AboutImage = styled.div`
   display: flex;
-  flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
 const AboutExplain = styled.div`
   display: flex;
-  flex: 1;
   justify-content: center;
   flex-direction: column;
+  width: 500px;
 
   ${props =>
     props.status === "left" &&
     css`
       padding-left: 150px;
+
+      @media (max-width: 1024px) {
+        padding-left: unset;
+      }
     `}
+
+  @media(max-width:650px) {
+    width: unset;
+  }
 `;
 
 const AboutHeader = styled.p`
@@ -211,12 +272,26 @@ const AboutHeader = styled.p`
   margin-bottom: 15px;
   color: #4488f7;
   font-weight: bold;
+
+  @media (max-width: 465px) {
+    font-size: 1.2rem;
+  }
+  @media (max-width: 365px) {
+    font-size: 1rem;
+  }
 `;
 
 const AboutMessage = styled.p`
   font-size: 20px;
   line-height: 1.5;
   color: #5c5c5c;
+
+  @media (max-width: 465px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 365px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const CheckIcon = styled(MdDone)`

@@ -28,9 +28,6 @@ const TopBar = ({ theme }) => {
   const setClickEvent = e => {
     if (popMenuRef.current && popMenuRef.current.className) {
       const compareTarget = e.path.filter(object => {
-        console.log("obj :: ", object.className);
-        console.log("ref :: ", popMenuRef.current.className);
-
         return object.className === popMenuRef.current.className;
       });
 
@@ -142,6 +139,12 @@ const TopBar = ({ theme }) => {
                         }}
                       >
                         <PopMenuRow theme={theme}>
+                          <StatusMenuText>내 일정</StatusMenuText>
+                        </PopMenuRow>
+                        <PopMenuRow theme={theme}>
+                          <StatusMenuText>일정 만들기</StatusMenuText>
+                        </PopMenuRow>
+                        <PopMenuRow theme={theme}>
                           <StatusMenuText>정보 수정하기</StatusMenuText>
                         </PopMenuRow>
                         <GoogleLogout
@@ -182,7 +185,7 @@ const Container = styled.div`
   width: 100%;
   height: 60px;
 
-  padding-left: 60px;
+  /*padding-left: 60px;*/
   background: none;
   transition: all 0.3s ease;
   z-index: 12;
@@ -214,7 +217,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 1300px;
+  width: 90%;
   height: 100%;
 `;
 
@@ -288,6 +291,10 @@ const Menu = styled.li`
     border-bottom: 2px solid black;
     margin-top: 1px;
   }
+
+  @media (max-width: 650px) {
+    display: none;
+  }
 `;
 
 const WrapperRight = styled.div`
@@ -324,6 +331,7 @@ const StatusMenu = styled.div`
   position: relative;
   align-items: center;
   cursor: pointer;
+  /*padding-right: 45px;*/
 `;
 
 const HelloText = styled.p`
@@ -373,7 +381,8 @@ const PopMenu = styled.div`
   position: absolute;
   width: 200px;
   top: 30px;
-  left: -40px;
+  /*left: -50px;*/
+  right: -5%;
   border: 1px solid #dcdcdc;
   background: white;
 `;
