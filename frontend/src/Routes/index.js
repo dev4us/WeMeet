@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Store } from "../GlobalState/store";
 
 import About from "./About";
+import CreateTitle from "./CreateTitle";
 
 const LoggedOutRoutes = () => (
   <BrowserRouter>
@@ -17,6 +18,7 @@ const LoggedInRoutes = () => (
   <BrowserRouter>
     <Switch>
       <Route path="/" exact component={About} />
+      <Route path="/create/title" component={CreateTitle} />
     </Switch>
   </BrowserRouter>
 );

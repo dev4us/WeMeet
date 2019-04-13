@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled, { css } from "styled-components";
+import { toast } from "react-toastify";
+
 import TopBar from "../../Components/TopBar";
 import Footer from "../../Components/Footer";
 
 import { MdDone } from "react-icons/md";
 import IPhone from "../../Assets/iphone.png";
+import { Store } from "../../GlobalState/store";
 
-const About = () => {
+const About = ({ history }) => {
+  const { state } = useContext(Store);
+
+  const goNextPage = page => {
+    if (state.isLoggedIn === false) {
+      toast.error(`해당 기능은 로그인이 먼저 필요합니다.`);
+      return false;
+    }
+
+    history.push(`/${page}`);
+  };
   return (
     <>
       <TopBar theme="home" />
@@ -21,7 +34,13 @@ const About = () => {
                   <br />
                   우리 언제 만날까요?
                   <br />
-                  <TryBtn>지금 이용해보기</TryBtn>
+                  <TryBtn
+                    onClick={() => {
+                      goNextPage("create/title");
+                    }}
+                  >
+                    지금 이용해보기
+                  </TryBtn>
                 </IntroMainMessage>
               </IntroLeft>
               <IntroRight>

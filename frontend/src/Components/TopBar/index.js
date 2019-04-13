@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
+import { withRouter } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { toast } from "react-toastify";
@@ -9,7 +10,7 @@ import { useQuery, useMutation } from "react-apollo-hooks";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import { SIGN_IN_GOOGLE, GET_PROFILE } from "./queries";
 
-const TopBar = ({ theme }) => {
+const TopBar = ({ theme, history }) => {
   const { state, dispatch } = useContext(Store);
   const [scroll, setScroll] = useState(0);
   const [isProfilePop, setProfilePop] = useState(false);
@@ -38,6 +39,15 @@ const TopBar = ({ theme }) => {
     setProfilePop(false);
   };
 
+  const goNextPage = page => {
+    if (state.isLoggedIn === false) {
+      toast.error(`해당 기능은 로그인이 먼저 필요합니다.`);
+      return false;
+    }
+
+    history.push(`/${page}`);
+  };
+
   useEffect(() => {
     window.addEventListener("mousedown", setClickEvent, false);
 
@@ -55,11 +65,21 @@ const TopBar = ({ theme }) => {
       <Container theme={theme} scroll={scroll}>
         <Wrapper>
           <WrapperLeft>
-            <Logo theme={theme} scroll={scroll}>
+            <Logo
+              theme={theme}
+              scroll={scroll}
+              onClick={() => {
+                history.push("/");
+              }}
+            >
               WeMeet
             </Logo>
             <MenuWrapper>
-              <Menu theme={theme} scroll={scroll}>
+              <Menu
+                theme={theme}
+                scroll={scroll}
+                onClick={() => goNextPage("create/title")}
+              >
                 일정 만들기
               </Menu>
               <Menu theme={theme} scroll={scroll}>
@@ -411,4 +431,4 @@ const StatusMenuText = styled.p`
   font-size: 12px;
   color: #5c5c5c;
 `;
-export default TopBar;
+export default withRouter(TopBar);
