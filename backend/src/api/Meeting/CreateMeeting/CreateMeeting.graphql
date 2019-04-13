@@ -1,0 +1,9 @@
+type CreateMeetingResponse {
+  ok: Boolean!
+  error: String
+  Meeting: Meeting
+}
+
+type Mutation {
+  CreateMeeting(title: String!, description: String!): CreateMeetingResponse!
+}

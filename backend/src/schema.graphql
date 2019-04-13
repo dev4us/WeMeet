@@ -14,6 +14,17 @@ type Query {
   User: String!
 }
 
+type CreateMeetingResponse {
+  ok: Boolean!
+  error: String
+  Meeting: Meeting
+}
+
+type Mutation {
+  CreateMeeting(title: String!, description: String!): CreateMeetingResponse!
+  SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!
+}
+
 type Meeting {
   id: Int!
   title: String!
@@ -47,8 +58,4 @@ type SignInResponse {
   error: String
   token: String
   userName: String
-}
-
-type Mutation {
-  SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!
 }
