@@ -15,11 +15,12 @@ const resolvers: Resolvers = {
         { req }
       ): Promise<CreateMeetingResponse> => {
         const { user } = req;
-        const { title, description } = args;
+        const { title, description, thumbnail } = args;
 
         try {
           const newMeeting = await Meeting.create({
             title,
+            thumbnail,
             description,
             admin: user
           }).save();

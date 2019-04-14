@@ -21,14 +21,15 @@ type CreateMeetingResponse {
 }
 
 type Mutation {
-  CreateMeeting(title: String!, description: String!): CreateMeetingResponse!
+  CreateMeeting(title: String!, description: String!, thumbnail: String!): CreateMeetingResponse!
   SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!
 }
 
 type Meeting {
   id: Int!
   title: String!
-  description: String
+  thumbnail: String
+  description: String!
   participants: [User]
   admin: User
   meetingDays: [Day]

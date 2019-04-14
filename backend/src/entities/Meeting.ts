@@ -21,6 +21,9 @@ class Meeting extends BaseEntity {
   @Column({ nullable: false })
   title: string;
 
+  @Column({ nullable: false })
+  thumbnail: string;
+
   @Column({ nullable: true })
   description: string;
 

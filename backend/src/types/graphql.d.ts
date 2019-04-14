@@ -1,4 +1,4 @@
-export const typeDefs = ["type Day {\n  id: Int!\n  pickDate: String!\n  asMeeting: Meeting\n  participants: [User]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Query {\n  Day: String!\n  Meeting: String!\n  GetProfile: GetProfileResponse!\n  User: String!\n}\n\ntype CreateMeetingResponse {\n  ok: Boolean!\n  error: String\n  Meeting: Meeting\n}\n\ntype Mutation {\n  CreateMeeting(title: String!, description: String!): CreateMeetingResponse!\n  SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!\n}\n\ntype Meeting {\n  id: Int!\n  title: String!\n  description: String\n  participants: [User]\n  admin: User\n  meetingDays: [Day]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype GetProfileResponse {\n  ok: Boolean!\n  error: String\n  User: User\n}\n\ntype User {\n  id: Int!\n  userName: String!\n  userEmail: String!\n  profileImage: String\n  meetings: [Meeting]\n  manages: [Meeting]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype SignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n  userName: String\n}\n"];
+export const typeDefs = ["type Day {\n  id: Int!\n  pickDate: String!\n  asMeeting: Meeting\n  participants: [User]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype Query {\n  Day: String!\n  Meeting: String!\n  GetProfile: GetProfileResponse!\n  User: String!\n}\n\ntype CreateMeetingResponse {\n  ok: Boolean!\n  error: String\n  Meeting: Meeting\n}\n\ntype Mutation {\n  CreateMeeting(title: String!, description: String!, thumbnail: String!): CreateMeetingResponse!\n  SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!\n}\n\ntype Meeting {\n  id: Int!\n  title: String!\n  thumbnail: String\n  description: String!\n  participants: [User]\n  admin: User\n  meetingDays: [Day]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype GetProfileResponse {\n  ok: Boolean!\n  error: String\n  User: User\n}\n\ntype User {\n  id: Int!\n  userName: String!\n  userEmail: String!\n  profileImage: String\n  meetings: [Meeting]\n  manages: [Meeting]\n  createdAt: String!\n  updatedAt: String\n}\n\ntype SignInResponse {\n  ok: Boolean!\n  error: String\n  token: String\n  userName: String\n}\n"];
 /* tslint:disable */
 
 export interface Query {
@@ -28,7 +28,8 @@ export interface User {
 export interface Meeting {
   id: number;
   title: string;
-  description: string | null;
+  thumbnail: string | null;
+  description: string;
   participants: Array<User> | null;
   admin: User | null;
   meetingDays: Array<Day> | null;
@@ -53,6 +54,7 @@ export interface Mutation {
 export interface CreateMeetingMutationArgs {
   title: string;
   description: string;
+  thumbnail: string;
 }
 
 export interface SignInMutationArgs {

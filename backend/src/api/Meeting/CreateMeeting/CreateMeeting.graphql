@@ -5,5 +5,9 @@ type CreateMeetingResponse {
 }
 
 type Mutation {
-  CreateMeeting(title: String!, description: String!): CreateMeetingResponse!
+  CreateMeeting(
+    title: String!
+    description: String!
+    thumbnail: String!
+  ): CreateMeetingResponse!
 }
