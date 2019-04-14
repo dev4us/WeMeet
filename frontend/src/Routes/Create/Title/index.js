@@ -1,19 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { toast } from "react-toastify";
+import { Link, withRouter } from "react-router-dom";
 
-import TopBar from "../../Components/TopBar";
+import TopBar from "../../../Components/TopBar";
 
-const CreateTitle = () => {
+const CreateTitle = ({ history }) => {
+  const [title, setTitle] = useState("");
+  const submitTitle = () => {
+    if (title === "") {
+      toast.warning("일정명을 적어주세요");
+      return false;
+    }
+
+    if (title.length > 15) {
+      toast.warning("일정명을 15자 이내로 작성해주세요");
+      return false;
+    }
+
+    history.push({
+      pathname: "/create/photo",
+      state: {
+        title
+      }
+    });
+  };
   return (
     <Container>
       <TopBar />
       <MainFrame>
         <MainContents>
           <Header>당신의 소중한 일정을 뭐라고 부르면 좋을까요?</Header>
-          <InputText />
+          <InputText
+            placeholder="이곳에 작성해주세요"
+            onChange={e => setTitle(e.target.value)}
+          />
           <BtnFrame>
-            <SubmitBtn>다음 단계로</SubmitBtn>
-            <CancelBtn>생각을 해본 뒤에 돌아올게요.</CancelBtn>
+            <CancelBtn to="/">생각이 좀 필요할 것 같아요.</CancelBtn>
+            <SubmitBtn
+              onClick={() => {
+                submitTitle();
+              }}
+            >
+              다음 단계로
+            </SubmitBtn>
           </BtnFrame>
         </MainContents>
       </MainFrame>
@@ -21,7 +51,7 @@ const CreateTitle = () => {
   );
 };
 
-export default CreateTitle;
+export default withRouter(CreateTitle);
 
 const Container = styled.div`
   display: flex;
@@ -53,16 +83,19 @@ const InputText = styled.input`
   width: 100%;
   height: 60px;
   border: unset;
+
   border-bottom: 2px solid black;
   padding-bottom: 0px;
+  padding-left: 15px;
   font-size: 25px;
   color: #5c5c5c;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 `;
 
 const BtnFrame = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -84,7 +117,7 @@ const SubmitBtn = styled.button`
   transition: all 0.3s ease;
 `;
 
-const CancelBtn = styled.p`
+const CancelBtn = styled(Link)`
   font-size: 10px;
   color: #5c5c5c;
   cursor: pointer;
