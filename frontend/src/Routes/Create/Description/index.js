@@ -5,23 +5,24 @@ import { Link, withRouter } from "react-router-dom";
 
 import TopBar from "../../../Components/TopBar";
 
-const CreateTitle = ({ history }) => {
-  const [title, setTitle] = useState("");
-  const submitTitle = () => {
-    if (title === "") {
-      toast.warning("일정명을 적어주세요");
-      return false;
-    }
+const CreateTitle = ({ history, location }) => {
+  if (!location.state) {
+    history.push("/");
+  }
+  const title = location.state.title;
 
-    if (title.length > 15) {
-      toast.warning("일정명을 15자 이내로 작성해주세요");
+  const [description, setDescription] = useState("");
+  const submitTitle = () => {
+    if (description === "") {
+      toast.warning("간략한 설명을 작성해주세요");
       return false;
     }
 
     history.push({
-      pathname: "/create/desc",
+      pathname: "/create/photo",
       state: {
-        title
+        title,
+        desc: description
       }
     });
   };
@@ -30,13 +31,13 @@ const CreateTitle = ({ history }) => {
       <TopBar />
       <MainFrame>
         <MainContents>
-          <Header>당신의 소중한 일정을 뭐라고 부르면 좋을까요?</Header>
+          <Header>{`어떤 일정인지 간단하게 설명해주시겠어요?`}</Header>
           <InputText
             placeholder="이곳에 작성해주세요"
-            onChange={e => setTitle(e.target.value)}
+            onChange={e => setDescription(e.target.value)}
           />
           <BtnFrame>
-            <CancelBtn to="/">생각이 좀 필요할 것 같아요.</CancelBtn>
+            <CancelBtn to="/">고민한 뒤에 다시 만들러 올게요.</CancelBtn>
             <SubmitBtn
               onClick={() => {
                 submitTitle();

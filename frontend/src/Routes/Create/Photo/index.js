@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { SphereSpinner } from "react-spinners-kit";
 import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 
@@ -10,7 +11,9 @@ const CreatePhoto = ({ location, history }) => {
     history.push("/");
   }
   const [thumbnailURL, setThumbnailURL] = useState("");
-  const title = location.state.title;
+  const [loading, setLoading] = useState(false);
+  const { title, desc } = location.state;
+  console.log(desc);
 
   return (
     <Container>
@@ -18,6 +21,11 @@ const CreatePhoto = ({ location, history }) => {
       <MainFrame>
         <MainContents>
           <Header>{`'${title}' 일정에 어울리는 이미지가 있을까요?`}</Header>
+          {loading && thumbnailURL === "" && (
+            <LoaderFrame>
+              <Loader size={80} color="#686769" loading={loading} />
+            </LoaderFrame>
+          )}
           <InputFile
             id="thumbnail"
             type="file"
@@ -28,7 +36,7 @@ const CreatePhoto = ({ location, history }) => {
               } = e;
 
               if (files) {
-                setThumbnailURL("s");
+                setLoading(true);
                 const formData = new FormData();
                 formData.append("file", files[0]);
                 formData.append("api_key", "221794274994255");
@@ -43,13 +51,16 @@ const CreatePhoto = ({ location, history }) => {
                 );
 
                 if (secure_url) {
-                  console.log(secure_url);
                   setThumbnailURL(secure_url);
+                  setLoading(false);
                 }
               }
             }}
           />
-          <Thumnail src={thumbnailURL} url={thumbnailURL} />
+          {!loading && thumbnailURL !== "" && (
+            <Thumnail src={thumbnailURL} url={thumbnailURL} />
+          )}
+
           <BtnFrame>
             <CancelBtn to="/">이미지는 별도로 없습니다.</CancelBtn>
             <RightFrame>
@@ -124,8 +135,8 @@ const InputLabel = styled.label`
 
 const Thumnail = styled.img`
   display: none;
-  width: 300px;
-  height: 300px;
+  max-width: 300px;
+  max-height: 300px;
 
   margin-bottom: 15px;
   ${props =>
@@ -166,4 +177,17 @@ const CancelBtn = styled(Link)`
   color: #5c5c5c;
   cursor: pointer;
   text-decoration: underline;
+`;
+
+const LoaderFrame = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  margin-top: 100px;
+  margin-bottom: 100px;
+`;
+
+const Loader = styled(SphereSpinner)`
+  margin-bottom: 25px;
 `;
