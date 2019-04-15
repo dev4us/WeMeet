@@ -18,11 +18,17 @@ const resolvers: Resolvers = {
         const { title, description, thumbnail } = args;
 
         try {
+          const generatedHash = await Math.random()
+            .toString(36)
+            .substr(2, 6);
+
           const newMeeting = await Meeting.create({
             title,
             thumbnail,
             description,
-            admin: user
+            admin: user,
+            participants: [user],
+            hashKey: generatedHash
           }).save();
 
           if (!newMeeting) {

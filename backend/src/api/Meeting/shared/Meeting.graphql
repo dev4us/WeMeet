@@ -1,6 +1,7 @@
 type Meeting {
   id: Int!
   title: String!
+  hashKey: String!
   thumbnail: String
   description: String!
   participants: [User]

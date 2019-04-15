@@ -19,6 +19,9 @@ class Meeting extends BaseEntity {
   id: number;
 
   @Column({ nullable: false })
+  hashKey: string;
+
+  @Column({ nullable: false })
   title: string;
 
   @Column({ nullable: false })
