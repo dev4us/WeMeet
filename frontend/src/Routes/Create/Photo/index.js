@@ -28,7 +28,7 @@ const CreatePhoto = ({ location, history }) => {
           <Header>{`'${title}' 일정에 어울리는 이미지가 있을까요?`}</Header>
           {loading && thumbnailURL === "" && (
             <LoaderFrame>
-              <Loader size={80} color="#686769" loading={loading} />
+              <Loader size={80} color="#3177eb" loading={loading} />
             </LoaderFrame>
           )}
           <InputFile
