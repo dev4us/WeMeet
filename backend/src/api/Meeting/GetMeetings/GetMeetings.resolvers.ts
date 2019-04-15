@@ -30,6 +30,7 @@ const resolvers: Resolvers = {
                 "participants.id = :userId",
                 { userId: user.id }
               )
+              .leftJoinAndSelect("meeting.confirmDay", "confirmDay")
               .getMany();
           }
           if (reqType === "before") {
