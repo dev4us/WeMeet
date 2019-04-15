@@ -7,7 +7,8 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
-  ManyToOne
+  ManyToOne,
+  OneToOne
 } from "typeorm";
 
 import User from "./User";
@@ -27,6 +28,9 @@ class Day extends BaseEntity {
   @ManyToMany(type => User, user => user.meetings)
   @JoinTable()
   participants: User[];
+
+  @OneToOne(type => Meeting, meeting => meeting.confirmDay)
+  asConfirmDay: Meeting;
 
   @CreateDateColumn() createdAt: string;
   @UpdateDateColumn() updatedAt: string;

@@ -3,6 +3,7 @@ type Day {
   pickDate: String!
   asMeeting: Meeting
   participants: [User]
+  asConfirmDay: Meeting
   createdAt: String!
   updatedAt: String
 }
