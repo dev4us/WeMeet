@@ -10,7 +10,9 @@ import CreateTitle from "./Create/Title";
 import CreateDesc from "./Create/Description";
 import CreatePhoto from "./Create/Photo";
 
-import MyMeet from "./MyMeet";
+import AllMeet from "./MyMeet/AllMeet";
+import BeforeMeet from "./MyMeet/BeforeMeet";
+import EndMeet from "./MyMeet/EndMeet";
 
 const LoggedOutRoutes = () => (
   <BrowserRouter>
@@ -27,7 +29,9 @@ const LoggedInRoutes = () => (
       <Route path="/create/title" component={CreateTitle} />
       <Route path="/create/desc" component={CreateDesc} />
       <Route path="/create/photo" component={CreatePhoto} />
-      <Route path="/myMeet" component={MyMeet} />
+      <Route path="/myMeet/all" component={AllMeet} />
+      <Route path="/myMeet/before" component={BeforeMeet} />
+      <Route path="/myMeet/end" component={EndMeet} />
     </Switch>
   </BrowserRouter>
 );

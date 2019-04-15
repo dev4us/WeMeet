@@ -25,6 +25,7 @@
     "react-icons": "^3.5.0",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
+    "react-select": "^2.4.2",
     "react-spinners": "^0.5.4",
     "react-spinners-kit": "^1.9.0",
     "react-spring": "^8.0.19",

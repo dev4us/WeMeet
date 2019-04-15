@@ -110,6 +110,7 @@ const SubmitBtn = styled.button`
   border: unset;
   color: white;
   font-weight: bold;
+  font-size: 11px;
 
   &:hover {
     background: #71a0ef;
