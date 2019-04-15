@@ -35,15 +35,15 @@ const SubBar = ({ history, location }) => {
 
   if (theme === "all") {
     themeName = "나의 전체 일정";
-    description = "소중한 인연들과의 모든 일정입니다.";
+    description = "소중한 인연들과의 모든 일정들입니다.";
     defaultOption = themeOption[0];
   } else if (theme === "before") {
-    themeName = "나의 전체 일정";
-    description = "소중한 인연들과의 모든 일정입니다.";
+    themeName = "진행 중인 일정";
+    description = "곧 만나게 될 인연들과의 일정들입니다.";
     defaultOption = themeOption[1];
   } else if (theme === "end") {
-    themeName = "나의 전체 일정";
-    description = "소중한 인연들과의 모든 일정입니다.";
+    themeName = "종료된 일정";
+    description = "소중한 인연들과의 만남 후 추억이 된 일정들입니다.";
     defaultOption = themeOption[2];
   } else {
     history.push({

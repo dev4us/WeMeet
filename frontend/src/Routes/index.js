@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { Store } from "../GlobalState/store";
 
@@ -32,6 +32,7 @@ const LoggedInRoutes = () => (
       <Route path="/myMeet/all" component={AllMeet} />
       <Route path="/myMeet/before" component={BeforeMeet} />
       <Route path="/myMeet/end" component={EndMeet} />
+      <Redirect from={"*"} to={"/"} />
     </Switch>
   </BrowserRouter>
 );
