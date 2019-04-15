@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import { useMutation } from "react-apollo-hooks";
 import styled, { css } from "styled-components";
+import { toast } from "react-toastify";
 import { SphereSpinner } from "react-spinners-kit";
+
 import axios from "axios";
 import { Link, withRouter } from "react-router-dom";
 
 import TopBar from "../../../Components/TopBar";
+import { CREATE_MEETING } from "../queries";
 
 const CreatePhoto = ({ location, history }) => {
   if (!location.state) {
@@ -13,7 +17,8 @@ const CreatePhoto = ({ location, history }) => {
   const [thumbnailURL, setThumbnailURL] = useState("");
   const [loading, setLoading] = useState(false);
   const { title, desc } = location.state;
-  console.log(desc);
+
+  const createMeetingMutation = useMutation(CREATE_MEETING);
 
   return (
     <Container>
@@ -65,7 +70,50 @@ const CreatePhoto = ({ location, history }) => {
             <CancelBtn to="/">이미지는 별도로 없습니다.</CancelBtn>
             <RightFrame>
               <InputLabel htmlFor="thumbnail">이미지 업로드</InputLabel>
-              <SubmitBtn type="button">다음 단계로</SubmitBtn>
+              <SubmitBtn
+                type="button"
+                onClick={() => {
+                  createMeetingMutation({
+                    variables: {
+                      title,
+                      description: desc,
+                      thumbnail: thumbnailURL
+                    }
+                  }).then(
+                    result => {
+                      const {
+                        data: {
+                          CreateMeeting: {
+                            ok: isMutated,
+                            error: mutationError,
+                            Meeting: { hashKey: newMeetingKey }
+                          }
+                        }
+                      } = result;
+
+                      if (isMutated !== true) {
+                        toast.error(mutationError);
+                        return false;
+                      }
+
+                      toast.success("새로운 일정이 생성되었습니다 : )");
+                      history.push({
+                        pathname: `/myMeet/${newMeetingKey}`
+                      });
+                      return true;
+                    },
+                    error => {
+                      toast.error(
+                        "일정 생성 중 문제가 발생했습니다. 다시 시도해주세요 : ("
+                      );
+                      console.log(error);
+                      return false;
+                    }
+                  );
+                }}
+              >
+                다음 단계로
+              </SubmitBtn>
             </RightFrame>
           </BtnFrame>
         </MainContents>
@@ -137,6 +185,8 @@ const Thumnail = styled.img`
   display: none;
   max-width: 300px;
   max-height: 300px;
+  min-width: 200px;
+  min-height: 200px;
 
   margin-bottom: 15px;
   ${props =>
