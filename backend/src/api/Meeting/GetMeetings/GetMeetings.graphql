@@ -1,0 +1,9 @@
+type GetMeetingsResponse {
+  ok: Boolean!
+  error: String
+  Meetings: [Meeting]
+}
+
+type Query {
+  GetMeetings(type: String!): GetMeetingsResponse!
+}

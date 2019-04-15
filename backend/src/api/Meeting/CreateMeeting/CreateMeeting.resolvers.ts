@@ -47,7 +47,7 @@ const resolvers: Resolvers = {
         } catch (error) {
           return {
             ok: false,
-            error: error.getMessage(),
+            error: error.message,
             Meeting: null
           };
         }

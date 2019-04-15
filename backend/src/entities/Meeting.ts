@@ -9,7 +9,8 @@ import {
   JoinTable,
   OneToMany,
   ManyToOne,
-  OneToOne
+  OneToOne,
+  JoinColumn
 } from "typeorm";
 import User from "./User";
 import Day from "./Day";
@@ -41,7 +42,8 @@ class Meeting extends BaseEntity {
   @OneToMany(type => Day, day => day.asMeeting)
   meetingDays: Day[];
 
-  @OneToOne(type => Day, day => day.asConfirmDay)
+  @OneToOne(type => Day)
+  @JoinColumn()
   confirmDay: Day;
 
   @CreateDateColumn() createdAt: string;
