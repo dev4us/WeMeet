@@ -9,7 +9,7 @@ type Day {
 
 type Query {
   Day: String!
-  GetMeetings(type: String!): GetMeetingsResponse!
+  GetMeetings(reqType: String!): GetMeetingsResponse!
   Meeting: String!
   GetProfile: GetProfileResponse!
   User: String!

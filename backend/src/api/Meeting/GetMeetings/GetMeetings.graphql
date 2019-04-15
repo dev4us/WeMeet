@@ -5,5 +5,5 @@ type GetMeetingsResponse {
 }
 
 type Query {
-  GetMeetings(type: String!): GetMeetingsResponse!
+  GetMeetings(reqType: String!): GetMeetingsResponse!
 }

@@ -15,13 +15,13 @@ const resolvers: Resolvers = {
         args: GetMeetingsQueryArgs,
         { req }
       ): Promise<GetMeetingsResponse> => {
-        const { type } = args;
+        const { reqType } = args;
         const { user } = req;
 
         let Meetings;
 
         try {
-          if (type === "all") {
+          if (reqType === "all") {
             Meetings = await getRepository(Meeting)
               .createQueryBuilder("meeting")
               .leftJoinAndSelect(
@@ -32,7 +32,7 @@ const resolvers: Resolvers = {
               )
               .getMany();
           }
-          if (type === "before") {
+          if (reqType === "before") {
             Meetings = await getRepository(Meeting)
               .createQueryBuilder("meeting")
               .leftJoinAndSelect(
@@ -45,7 +45,7 @@ const resolvers: Resolvers = {
               .where("confirmDay.pickDate > NOW()")
               .orWhere('meeting."confirmDayId" IS NULL')
               .getMany();
-          } else if (type === "end") {
+          } else if (reqType === "end") {
             Meetings = await getRepository(Meeting)
               .createQueryBuilder("meeting")
               .leftJoinAndSelect(
