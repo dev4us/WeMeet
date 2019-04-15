@@ -106,14 +106,13 @@ const SubmitBtn = styled.button`
   margin-bottom: 10px;
   cursor: pointer;
 
-  border: 2px solid black;
-  background: black;
+  background: #3177eb;
+  border: unset;
   color: white;
   font-weight: bold;
 
   &:hover {
-    background: white;
-    color: black;
+    background: #71a0ef;
   }
   transition: all 0.3s ease;
 `;

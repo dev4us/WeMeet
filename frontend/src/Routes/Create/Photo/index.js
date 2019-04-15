@@ -168,14 +168,13 @@ const InputLabel = styled.label`
   margin-bottom: 10px;
   cursor: pointer;
 
-  border: 2px solid black;
-  background: black;
+  border: unset;
+  background: #ff7070;
   color: white;
   font-weight: bold;
 
   &:hover {
-    background: white;
-    color: black;
+    background: #f58b8b;
   }
   transition: all 0.3s ease;
   font-size: 11px;
@@ -202,24 +201,21 @@ const BtnFrame = styled.div`
   justify-content: flex-end;
   width: 100%;
 `;
-
 const SubmitBtn = styled.button`
   width: 150px;
   height: 45px;
   margin-bottom: 10px;
   cursor: pointer;
 
-  border: 2px solid black;
-  background: black;
+  background: #3177eb;
+  border: unset;
   color: white;
   font-weight: bold;
 
   &:hover {
-    background: white;
-    color: black;
+    background: #71a0ef;
   }
   transition: all 0.3s ease;
-  font-size: 11px;
 `;
 
 const LoaderFrame = styled.div`
