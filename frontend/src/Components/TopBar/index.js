@@ -82,7 +82,11 @@ const TopBar = ({ theme, history }) => {
               >
                 일정 만들기
               </Menu>
-              <Menu theme={theme} scroll={scroll}>
+              <Menu
+                theme={theme}
+                scroll={scroll}
+                onClick={() => goNextPage("myMeet")}
+              >
                 내 일정
               </Menu>
             </MenuWrapper>

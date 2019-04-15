@@ -4,9 +4,13 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { Store } from "../GlobalState/store";
 
 import About from "./About";
+
+// About Create Meeting
 import CreateTitle from "./Create/Title";
 import CreateDesc from "./Create/Description";
 import CreatePhoto from "./Create/Photo";
+
+import MyMeet from "./MyMeet";
 
 const LoggedOutRoutes = () => (
   <BrowserRouter>
@@ -23,6 +27,7 @@ const LoggedInRoutes = () => (
       <Route path="/create/title" component={CreateTitle} />
       <Route path="/create/desc" component={CreateDesc} />
       <Route path="/create/photo" component={CreatePhoto} />
+      <Route path="/myMeet" component={MyMeet} />
     </Switch>
   </BrowserRouter>
 );

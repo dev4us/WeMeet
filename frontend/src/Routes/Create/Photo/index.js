@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { SphereSpinner } from "react-spinners-kit";
 
 import axios from "axios";
-import { Link, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
 import TopBar from "../../../Components/TopBar";
 import { CREATE_MEETING } from "../queries";
@@ -67,7 +67,6 @@ const CreatePhoto = ({ location, history }) => {
           )}
 
           <BtnFrame>
-            <CancelBtn to="/">이미지는 별도로 없습니다.</CancelBtn>
             <RightFrame>
               <InputLabel htmlFor="thumbnail">이미지 업로드</InputLabel>
               <SubmitBtn
@@ -112,7 +111,8 @@ const CreatePhoto = ({ location, history }) => {
                   );
                 }}
               >
-                다음 단계로
+                {thumbnailURL === "" && "괜찮아요."}
+                {thumbnailURL !== "" && "일정 만들기"}
               </SubmitBtn>
             </RightFrame>
           </BtnFrame>
@@ -199,7 +199,7 @@ const Thumnail = styled.img`
 const BtnFrame = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
   width: 100%;
 `;
 
@@ -220,13 +220,6 @@ const SubmitBtn = styled.button`
   }
   transition: all 0.3s ease;
   font-size: 11px;
-`;
-
-const CancelBtn = styled(Link)`
-  font-size: 10px;
-  color: #5c5c5c;
-  cursor: pointer;
-  text-decoration: underline;
 `;
 
 const LoaderFrame = styled.div`
