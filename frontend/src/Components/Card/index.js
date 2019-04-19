@@ -19,7 +19,7 @@ const Card = ({
   return (
     <Container
       onClick={() => {
-        history.push({ pathname: `/myMeet/${hashKey}` });
+        history.push({ pathname: `/myMeet/${hashKey}/setDate` });
       }}
     >
       {thumbnail !== "" && <TopFrame thumbnail={thumbnail} />}

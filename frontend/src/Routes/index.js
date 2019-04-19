@@ -30,7 +30,7 @@ const LoggedInRoutes = () => (
       <Route path="/create/desc" component={CreateDesc} />
       <Route path="/create/photo" component={CreatePhoto} />
       <Route path="/meetList/:concept" component={MeetList} />
-      <Route path="/myMeet/:hashKey" component={DetailMeet} />
+      <Route path="/myMeet/:hashKey/:concept" component={DetailMeet} />
       <Redirect from={"*"} to={"/"} />
     </Switch>
   </BrowserRouter>
