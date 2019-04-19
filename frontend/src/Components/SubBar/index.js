@@ -70,7 +70,7 @@ const SubBar = ({ history, location }) => {
           styles={themeSelectorStyle}
           onChange={e => {
             history.push({
-              pathname: `/myMeet/${e.value}`
+              pathname: `/meetList/${e.value}`
             });
           }}
         />
