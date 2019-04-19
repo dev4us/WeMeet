@@ -32,6 +32,9 @@ class Meeting extends BaseEntity {
   @Column({ nullable: true })
   description: string;
 
+  @Column({ nullable: false, default: true })
+  isValid: boolean;
+
   @ManyToMany(type => User, user => user.meetings)
   @JoinTable()
   participants: User[];

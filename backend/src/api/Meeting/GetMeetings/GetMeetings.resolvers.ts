@@ -31,6 +31,7 @@ const resolvers: Resolvers = {
                 { userId: user.id }
               )
               .leftJoinAndSelect("meeting.confirmDay", "confirmDay")
+              .andWhere("meeting.isValid = :isValid", { isValid: true })
               .getMany();
           }
           if (reqType === "before") {
@@ -43,8 +44,10 @@ const resolvers: Resolvers = {
                 { userId: user.id }
               )
               .leftJoinAndSelect("meeting.confirmDay", "confirmDay")
-              .where("confirmDay.pickDate > NOW()")
-              .orWhere('meeting."confirmDayId" IS NULL')
+              .where("meeting.isValid = :isValid", { isValid: true })
+              .andWhere(
+                'confirmDay.pickDate > NOW() OR meeting."confirmDayId" IS NULL'
+              )
               .getMany();
           } else if (reqType === "end") {
             Meetings = await getRepository(Meeting)
@@ -57,6 +60,7 @@ const resolvers: Resolvers = {
               )
               .leftJoinAndSelect("meeting.confirmDay", "confirmDay")
               .where("confirmDay.pickDate < NOW()")
+              .andWhere("meeting.isValid = :isValid", { isValid: true })
               .getMany();
           }
 

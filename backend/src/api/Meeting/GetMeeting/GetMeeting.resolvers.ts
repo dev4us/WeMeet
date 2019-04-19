@@ -29,6 +29,7 @@ const resolvers: Resolvers = {
             )
             .leftJoinAndSelect("meeting.confirmDay", "confirmDay")
             .where({ hashKey })
+            .andWhere("meeting.isValid = :isValid", { isValid: true })
             .getOne();
 
           if (!getMeeting) {

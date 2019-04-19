@@ -46,6 +46,7 @@ type Meeting {
   thumbnail: String
   description: String!
   participants: [User]
+  isValid: Boolean!
   admin: User
   meetingDays: [Day]
   confirmDay: Day
