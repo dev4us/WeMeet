@@ -1,0 +1,9 @@
+type GetMeetingResponse {
+  ok: Boolean!
+  error: String
+  Meeting: Meeting
+}
+
+type Query {
+  GetMeeting(hashKey: String!): GetMeetingResponse!
+}

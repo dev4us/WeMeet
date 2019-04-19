@@ -9,6 +9,7 @@ type Day {
 
 type Query {
   Day: String!
+  GetMeeting(hashKey: String!): GetMeetingResponse!
   GetMeetings(reqType: String!): GetMeetingsResponse!
   Meeting: String!
   GetProfile: GetProfileResponse!
@@ -24,6 +25,12 @@ type CreateMeetingResponse {
 type Mutation {
   CreateMeeting(title: String!, description: String!, thumbnail: String!): CreateMeetingResponse!
   SignIn(userEmail: String!, userName: String!, profileImage: String): SignInResponse!
+}
+
+type GetMeetingResponse {
+  ok: Boolean!
+  error: String
+  Meeting: Meeting
 }
 
 type GetMeetingsResponse {
