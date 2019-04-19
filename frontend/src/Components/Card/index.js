@@ -4,11 +4,24 @@ import styled, { css } from "styled-components";
 import { FaShareAlt } from "react-icons/fa";
 
 import moment from "moment";
+import { withRouter } from "react-router-dom";
 
-const Card = ({ title, thumbnail, desc, confirmDay, participantsCount }) => {
+const Card = ({
+  title,
+  thumbnail,
+  desc,
+  confirmDay,
+  participantsCount,
+  hashKey,
+  history
+}) => {
   console.log(typeof confirmDay);
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        history.push({ pathname: `/myMeet/${hashKey}` });
+      }}
+    >
       {thumbnail !== "" && <TopFrame thumbnail={thumbnail} />}
 
       <BottomFrame>
@@ -31,6 +44,8 @@ const Card = ({ title, thumbnail, desc, confirmDay, participantsCount }) => {
     </Container>
   );
 };
+
+export default withRouter(Card);
 
 const Container = styled.div`
   position: relative;
@@ -132,5 +147,3 @@ const SharingIcon = styled(FaShareAlt)`
   color: #3077eb;
   font-size: 16px;
 `;
-
-export default Card;

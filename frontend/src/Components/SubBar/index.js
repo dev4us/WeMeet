@@ -58,7 +58,11 @@ const SubBar = ({ history, location }) => {
         <Description>{description}</Description>
       </LeftFrame>
       <RightFrame>
-        <CreateMeetBtn>새로운 일정 만들기</CreateMeetBtn>
+        <CreateMeetBtn
+          onClick={() => history.push({ pathname: "/create/title" })}
+        >
+          새로운 일정 만들기
+        </CreateMeetBtn>
         <Select
           defaultValue={defaultOption}
           label="Single select"

@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import TopBar from "../../../Components/TopBar";
 import SubBar from "../../../Components/SubBar";
+import CardContainer from "../../../Components/CardContainer";
 
 const EndMeet = () => {
   return (
@@ -11,6 +12,7 @@ const EndMeet = () => {
       <MainFrame>
         <MainContents>
           <SubBar>1</SubBar>
+          <CardContainer reqType="end" />
         </MainContents>
       </MainFrame>
     </Container>

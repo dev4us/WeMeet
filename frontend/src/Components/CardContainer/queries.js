@@ -11,6 +11,7 @@ export const GET_MEETINGS = gql`
         title
         description
         thumbnail
+        hashKey
         confirmDay {
           pickDate
         }
