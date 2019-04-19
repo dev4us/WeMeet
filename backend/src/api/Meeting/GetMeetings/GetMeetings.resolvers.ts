@@ -24,7 +24,7 @@ const resolvers: Resolvers = {
           if (reqType === "all") {
             Meetings = await getRepository(Meeting)
               .createQueryBuilder("meeting")
-              .leftJoinAndSelect(
+              .innerJoinAndSelect(
                 "meeting.participants",
                 "participants",
                 "participants.id = :userId",
@@ -36,7 +36,7 @@ const resolvers: Resolvers = {
           if (reqType === "before") {
             Meetings = await getRepository(Meeting)
               .createQueryBuilder("meeting")
-              .leftJoinAndSelect(
+              .innerJoinAndSelect(
                 "meeting.participants",
                 "participants",
                 "participants.id = :userId",
@@ -49,7 +49,7 @@ const resolvers: Resolvers = {
           } else if (reqType === "end") {
             Meetings = await getRepository(Meeting)
               .createQueryBuilder("meeting")
-              .leftJoinAndSelect(
+              .innerJoinAndSelect(
                 "meeting.participants",
                 "participants",
                 "participants.id = :userId",
